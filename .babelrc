@@ -1,0 +1,19 @@
+{
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "root": ["./"],
+          "alias": {
+            "@components": "./src/components",            
+            "@hooks": "./src/hooks",
+            "@models": "./src/models",
+            "@screens": "./src/screens",
+            "@services": "./src/services",
+            "@utilities": "./src/utilities"
+          }
+        }
+      ]
+    ]
+  }
+  
