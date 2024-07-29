@@ -10,8 +10,8 @@ interface MenuItem {
 const Menu = () => {
   const menuItems: MenuItem[] = [
     { label: 'Home', path: '/' },
-    { label: 'Aperturas', path: '/add' },
-    { label: 'Cancelación', path: '/remove' },
+    { label: 'Aperturas', path: '/openings' },
+    { label: 'Cancelación', path: '/withdrawals' },
   ];
 
   return (
