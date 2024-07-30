@@ -5,33 +5,34 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { IconButton } from '@mui/material';
-import { Add } from '@mui/icons-material';
-import { CLIENT_MODEL } from '@models';
+import { TRANSACION_MODEL } from '@models';
 
 
-export default function ClientsList({clients: clientsData}: {clients: CLIENT_MODEL[]}) {
+export default function TransactionsList({transaction: transactionData}: {transaction: TRANSACION_MODEL[]}) {
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell align="right">ID</TableCell>
-            <TableCell align="right">Nombre</TableCell>
-            <TableCell align="right">Apellidos</TableCell>
-            <TableCell align="right">Balance</TableCell>
+            <TableCell align="right">Tipo</TableCell>
+            <TableCell align="right">Fondo</TableCell>
+            <TableCell align="right">Cliente</TableCell>
+            <TableCell align="right">Valor</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {clientsData.map((row) => (
+          {transactionData.map((row) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell align="right">{row.id}</TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.lastName}</TableCell>
-              <TableCell align="right">{row.balance}</TableCell>
+              <TableCell align="right">{row.type}</TableCell>
+              <TableCell align="right">{row.fund.name}</TableCell>
+              <TableCell align="right">{row.customer.name}</TableCell>
+              <TableCell align="right">{row.amount}</TableCell>
             </TableRow>
           ))}
         </TableBody>

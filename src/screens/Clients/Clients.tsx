@@ -1,30 +1,36 @@
 import { useEffect, useState } from "react";
 
 import { CLIENT_MODEL } from "@models";
-import { testPoke, getClients } from '../../services';
+import { getAllClients } from '../../services';
 import ClientsList from "./components/ClientsList"
 import { useFetchAndLoad } from "../../hooks";
 
 
 export const Clients = () => {
-  const { callEndpoint, isLoading, setIsLoading } = useFetchAndLoad();
+  const { callEndpoint } = useFetchAndLoad();
   const [clientsList, setClientsList] = useState<CLIENT_MODEL[]>([])
 
   useEffect(() => {
-    const fetchTestPoke = async () => {
-      const response = await callEndpoint(testPoke());
-
-      console.log('response --> ', response);
-    }
 
     const fetchClients = async () => {
-      const clientListResponse: CLIENT_MODEL[] = getClients();
-      console.log('clientListResponse --> ', clientListResponse);
+      const response: [] = await callEndpoint(getAllClients());
+      const clientListResponse: CLIENT_MODEL[] = [];
 
-      setClientsList(clientListResponse);
+      if(response.length > 0){
+        response.map((client: any) => {
+          clientListResponse.push({
+            id: client._id,
+            name: client.name,
+            lastName: client.surnames,
+            balance: client.balance
+          })
+        })
+
+        setClientsList(clientListResponse);
+      }
     }
 
-    fetchTestPoke();
+    
     fetchClients();
   }, [])
 
