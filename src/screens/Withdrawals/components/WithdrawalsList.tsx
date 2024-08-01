@@ -35,7 +35,6 @@ export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell align="right">ID</TableCell>
               <TableCell align="right">Nombre</TableCell>
               <TableCell align="right">Valor mínimo de vinculación</TableCell>
               <TableCell align="right">Categoria</TableCell>
@@ -47,7 +46,6 @@ export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]
                 key={row.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell align="right">{row.id}</TableCell>
                 <TableCell align="right">{row.name}</TableCell>
                 <TableCell align="right">${row.minValue}</TableCell>
                 <TableCell align="right">{row.category}</TableCell>

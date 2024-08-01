@@ -15,7 +15,6 @@ export default function TransactionsList({transaction: transactionData}: {transa
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">ID</TableCell>
             <TableCell align="right">Tipo</TableCell>
             <TableCell align="right">Fondo</TableCell>
             <TableCell align="right">Cliente</TableCell>
@@ -28,7 +27,6 @@ export default function TransactionsList({transaction: transactionData}: {transa
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell align="right">{row.id}</TableCell>
               <TableCell align="right">{row.type}</TableCell>
               <TableCell align="right">{row.fund.name}</TableCell>
               <TableCell align="right">{row.customer.name}</TableCell>
