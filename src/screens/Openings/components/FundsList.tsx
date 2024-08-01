@@ -1,3 +1,4 @@
+import { useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -5,17 +6,49 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 import { IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { FUND_MODEL, SUBSCRIBE_FUND_MODEL } from '@models';
-import { TransactionType } from '../../../models';
+import { TransactionType, TRANSACION_MODEL } from '../../../models';
 import { subscribeFund } from '../../../services';
 import { toast, ToastContainer } from 'react-toastify';
 import { useFetchAndLoad } from "../../../hooks";
+import ModalTransaction from '../../../components/ModalTransaction';
+
 
 
 export default function FundsAvailableList({funds: fundsData}: {funds: FUND_MODEL[]}) {
   const { callEndpoint } = useFetchAndLoad();
+
+  const [modalData, setModalData] = useState({});
+  const [open, setOpen] = useState(false);
+
+  
+  
+  const handleOpen = (fundData: FUND_MODEL) => {
+    const data = {
+      title: 'Inscripción a fondo',
+      content: `Se va a inscribir al fondo: ${fundData.name}`,
+      fund: fundData
+    }
+    setModalData(data)
+    setOpen(true)
+  };
+  const handleClose = () => setOpen(false);
+
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 500,
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+  };
 
   async function handleSubscribefund(fund: FUND_MODEL) {
     const dataSubscribeFund: SUBSCRIBE_FUND_MODEL = {
@@ -62,7 +95,7 @@ export default function FundsAvailableList({funds: fundsData}: {funds: FUND_MODE
                   <IconButton 
                     color="primary" 
                     aria-label="add to shopping cart"
-                    onClick={() => {handleSubscribefund(row)}}>
+                    onClick={() => handleOpen(row)}>
                     <Add />
                   </IconButton>
                 </TableCell>
@@ -73,6 +106,13 @@ export default function FundsAvailableList({funds: fundsData}: {funds: FUND_MODE
         </Table>
       </TableContainer>
       <ToastContainer />
+
+      <ModalTransaction
+        open={open}
+        onClose={handleClose}
+        data={modalData}
+        callback={handleSubscribefund}
+      />
     </>
   );
 }
