@@ -11,18 +11,28 @@ import { FUND_MODEL, SUBSCRIBE_FUND_MODEL } from '@models';
 import { TransactionType } from '../../../models';
 import { subscribeFund } from '../../../services';
 import { toast, ToastContainer } from 'react-toastify';
+import { useFetchAndLoad } from "../../../hooks";
 
 
 export default function FundsAvailableList({funds: fundsData}: {funds: FUND_MODEL[]}) {
+  const { callEndpoint } = useFetchAndLoad();
 
-  function handleSubscribefund(fund: FUND_MODEL) {
+  async function handleSubscribefund(fund: FUND_MODEL) {
     const dataSubscribeFund: SUBSCRIBE_FUND_MODEL = {
       fund_id: fund.id.toString(),
       customer_id: '66a80ef56a5158fe5cd25891',
       amount: fund.minValue,
       type: TransactionType.SUBSCRIPTION
     }
-    subscribeFund(dataSubscribeFund);
+    const subscribeResponse = await callEndpoint(subscribeFund(dataSubscribeFund));
+
+    if(subscribeResponse.error && subscribeResponse.error === 'Without Balance'){
+      toast.warning(`No tiene saldo disponible para vincularse al fondo. ${fund.name}`, {
+        position: "top-right"
+      });
+      return;
+    }
+    console.log(subscribeResponse);
     toast.success(`Se suscribió al fondo ${fund.name}`, {
       position: "top-right"
     });
