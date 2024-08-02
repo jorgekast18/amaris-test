@@ -1,6 +1,7 @@
 import React from 'react';
 import '../assets/css/Menu.css';
 import { Link } from 'react-router-dom';
+import { useBalance } from '../context/BalanceContext';
 
 interface MenuItem {
   label: string;
@@ -8,6 +9,7 @@ interface MenuItem {
 }
 
 const Menu = () => {
+  const { balance } = useBalance();
   const menuItems: MenuItem[] = [
     { label: 'Home', path: '/' },
     { label: 'Aperturas', path: '/openings' },
@@ -16,6 +18,7 @@ const Menu = () => {
 
   return (
     <nav className="menu">
+      Saldo: ${balance}
       <ul>
         {menuItems.map((item) => (
           <li key={item.label}>

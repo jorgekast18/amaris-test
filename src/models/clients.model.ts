@@ -1,6 +1,6 @@
 export interface CLIENT_MODEL {
-    id: number;
+    _id: number;
     name: string;
-    lastName: string;
+    surnames: string;
     balance: number;
 }

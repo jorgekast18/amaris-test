@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { loadAbort } from '../utilities';
-import { getAllCustomers } from '../constants/urls';
+import { getAllCustomersUrl } from '../constants/urls';
 
 export const getAllClients = () => {
     const controller = loadAbort();
     return {
-        call: axios.get(getAllCustomers, { signal: controller.signal }),
+        call: axios.get(getAllCustomersUrl, { signal: controller.signal }),
         controller,
     }
 }
@@ -13,7 +13,7 @@ export const getAllClients = () => {
 export const getClientById = (id: string) => {
     const controller = loadAbort();
     return {
-        call: axios.get(`${getAllCustomers}/${id}`, { signal: controller.signal }),
+        call: axios.get(`${getAllCustomersUrl}/${id}`, { signal: controller.signal }),
         controller,
     }
 }
