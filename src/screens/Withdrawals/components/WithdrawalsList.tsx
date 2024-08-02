@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,9 +13,22 @@ import "react-toastify/dist/ReactToastify.css";
 import { FUND_MODEL, SUBSCRIBE_FUND_MODEL } from '@models';
 import { TransactionType } from '../../../models';
 import { withdrawalFund } from '../../../services';
+import ModalConfirmation from '../../../components/ConfirmationDialog';
 
 
 export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]}) {
+
+  const [modalData, setModalData] = useState({});
+  const [open, setOpen] = useState(false);
+  
+  const handleOpen = (fundData: FUND_MODEL) => {
+    const data = {
+      fund: fundData
+    }
+    setModalData(data)
+    setOpen(true)
+  };
+  const handleClose = () => setOpen(false);
 
   function handleWithdrawalfund(fund: FUND_MODEL) {
     const dataSubscribeFund: SUBSCRIBE_FUND_MODEL = {
@@ -24,6 +38,7 @@ export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]
       type: TransactionType.WITHDRAWAL
     }
     withdrawalFund(dataSubscribeFund);
+    handleClose();
     toast.success(`Se retiró del fondo ${fund.name}`, {
       position: "top-right"
     });
@@ -53,7 +68,7 @@ export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]
                   <IconButton 
                     color="primary" 
                     aria-label="withdrawal fund"
-                    onClick={() => {handleWithdrawalfund(row)}}>
+                    onClick={() => {handleOpen(row)}}>
                     <Remove  />
                   </IconButton>
                 </TableCell>
@@ -63,6 +78,12 @@ export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]
           </TableBody>
         </Table>
       </TableContainer>
+      <ModalConfirmation
+        open={open}
+        onClose={handleClose}
+        data={modalData}
+        onConfirmation={handleWithdrawalfund}
+      />
       <ToastContainer />
     </>
   );

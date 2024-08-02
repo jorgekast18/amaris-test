@@ -6,9 +6,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
 import { IconButton } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { FUND_MODEL, SUBSCRIBE_FUND_MODEL } from '@models';
@@ -35,7 +32,7 @@ export default function FundsAvailableList({funds: fundsData}: {funds: FUND_MODE
       fund: fundData
     }
     setModalData(data)
-    setOpen(true)
+    handleClose();
   };
   const handleClose = () => setOpen(false);
 
@@ -61,13 +58,16 @@ export default function FundsAvailableList({funds: fundsData}: {funds: FUND_MODE
 
     if(subscribeResponse.error && subscribeResponse.error === 'Without Balance'){
       toast.warning(`No tiene saldo disponible para vincularse al fondo. ${fund.name}`, {
-        position: "top-right"
+        position: "top-right",
+        autoClose: 1000
       });
       return;
     }
     console.log(subscribeResponse);
+    setOpen(false);
     toast.success(`Se suscribió al fondo ${fund.name}`, {
-      position: "top-right"
+      position: "top-right",
+      autoClose: 1000
     });
   }
 
