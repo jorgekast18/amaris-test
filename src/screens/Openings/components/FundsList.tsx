@@ -14,38 +14,29 @@ import { subscribeFund } from '../../../services';
 import { toast, ToastContainer } from 'react-toastify';
 import { useFetchAndLoad } from "../../../hooks";
 import ModalTransaction from '../../../components/ModalTransaction';
+import { getBalance } from '../../../utilities';
+import { useBalance } from '../../../context/BalanceContext';
 
 
 
 export default function FundsAvailableList({funds: fundsData}: {funds: FUND_MODEL[]}) {
   const { callEndpoint } = useFetchAndLoad();
-
+  const { setBalance } = useBalance();
   const [modalData, setModalData] = useState({});
   const [open, setOpen] = useState(false);
 
   
   
-  const handleOpen = (fundData: FUND_MODEL) => {
+  const handleOpen = async (fundData: FUND_MODEL) => {
     const data = {
       title: 'Inscripción a fondo',
       content: `Se va a inscribir al fondo: ${fundData.name}`,
       fund: fundData
     }
     setModalData(data)
-    handleClose();
+    setOpen(true);
   };
   const handleClose = () => setOpen(false);
-
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 500,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-  };
 
   async function handleSubscribefund(fund: FUND_MODEL) {
     const dataSubscribeFund: SUBSCRIBE_FUND_MODEL = {
@@ -63,12 +54,13 @@ export default function FundsAvailableList({funds: fundsData}: {funds: FUND_MODE
       });
       return;
     }
-    console.log(subscribeResponse);
-    setOpen(false);
+    handleClose();
     toast.success(`Se suscribió al fondo ${fund.name}`, {
       position: "top-right",
       autoClose: 1000
     });
+    const balance = await getBalance();
+    setBalance(balance);
   }
 
   return (

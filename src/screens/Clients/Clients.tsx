@@ -15,12 +15,10 @@ export const Clients = () => {
 
     const fetchClients = async () => {
       const response: CLIENT_MODEL = await callEndpoint(getClientById('66a80ef56a5158fe5cd25891'));
-      
-      console.log(response);
 
-        setClient(response);
-        setBalance(response.balance)
-      }
+      setClient(response);
+      setBalance(response.balance)
+    }
     
 
     

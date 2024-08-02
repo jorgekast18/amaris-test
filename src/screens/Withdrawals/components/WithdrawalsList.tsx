@@ -12,12 +12,16 @@ import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { FUND_MODEL, SUBSCRIBE_FUND_MODEL } from '@models';
 import { TransactionType } from '../../../models';
+import { useFetchAndLoad } from "../../../hooks";
 import { withdrawalFund } from '../../../services';
 import ModalConfirmation from '../../../components/ConfirmationDialog';
+import { getBalance } from '../../../utilities';
+import { useBalance } from '../../../context/BalanceContext';
 
 
 export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]}) {
-
+  const { callEndpoint } = useFetchAndLoad();
+  const { setBalance } = useBalance();
   const [modalData, setModalData] = useState({});
   const [open, setOpen] = useState(false);
   
@@ -30,18 +34,20 @@ export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]
   };
   const handleClose = () => setOpen(false);
 
-  function handleWithdrawalfund(fund: FUND_MODEL) {
+  async function handleWithdrawalfund(fund: FUND_MODEL) {
     const dataSubscribeFund: SUBSCRIBE_FUND_MODEL = {
       fund_id: fund.id.toString(),
       customer_id: '66a80ef56a5158fe5cd25891',
       amount: fund.minValue,
       type: TransactionType.WITHDRAWAL
     }
-    withdrawalFund(dataSubscribeFund);
+    await callEndpoint(withdrawalFund(dataSubscribeFund));
     handleClose();
     toast.success(`Se retiró del fondo ${fund.name}`, {
       position: "top-right"
     });
+    const balance = await getBalance();
+    setBalance(balance);
   }
 
   return (
