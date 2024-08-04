@@ -1,10 +1,10 @@
 import axios from "axios";
 import { getAllCustomersUrl } from '../constants/urls';
 
-export const getBalance = async () => {
+export const getBalance = async (customerId: string | undefined) => {
     
-    const response = await axios.get(`${getAllCustomersUrl}/66a80ef56a5158fe5cd25891`);
-
+    const response = await axios.get(`${getAllCustomersUrl}/${customerId}`);
+    
     return response.data.balance;
 
 }

@@ -8,5 +8,5 @@ export const getAllFunds = `${urlBase}/funds`
 
 // Transactions
 export const getAllTransactionsUrl = `${urlBase}/transactions/transactions`
-export const subscribeFundUrl = `${urlBase}/transactions/transactions`
-export const withdrawalFunddUrl = `${urlBase}/transactions/transactions`
+export const subscribeFundUrl = `${urlBase}/customers/funds/subscribe`
+export const withdrawalFundUrl = `${urlBase}/customers/funds/withdrawal`

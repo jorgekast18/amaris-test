@@ -1,8 +1,9 @@
 export interface FUND_MODEL {
-    id: number;
+    _id: string;
     name: string;
-    minValue: number;
+    minimum_amount: number;
     category: string;
+    date?: string;
 
 }
 

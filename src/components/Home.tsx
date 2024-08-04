@@ -1,10 +1,9 @@
-import { Clients, Transactions } from "../screens"
+import { Clients } from "../screens"
 
 export const Home = () => {
   return (
     <>
       <Clients/>
-      <Transactions/>
     </>
     
   )

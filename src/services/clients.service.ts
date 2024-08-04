@@ -10,7 +10,7 @@ export const getAllClients = () => {
     }
 }
 
-export const getClientById = (id: string) => {
+export const getClientById = (id: string | undefined) => {
     const controller = loadAbort();
     return {
         call: axios.get(`${getAllCustomersUrl}/${id}`, { signal: controller.signal }),

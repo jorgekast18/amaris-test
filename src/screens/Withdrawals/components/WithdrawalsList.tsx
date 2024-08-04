@@ -38,7 +38,7 @@ export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]
     const dataSubscribeFund: SUBSCRIBE_FUND_MODEL = {
       fund_id: fund.id.toString(),
       customer_id: '66a80ef56a5158fe5cd25891',
-      amount: fund.minValue,
+      amount: fund.minimum_amount,
       type: TransactionType.WITHDRAWAL
     }
     await callEndpoint(withdrawalFund(dataSubscribeFund));
@@ -46,7 +46,7 @@ export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]
     toast.success(`Se retiró del fondo ${fund.name}`, {
       position: "top-right"
     });
-    const balance = await getBalance();
+    const balance = await getBalance('89indhiauh');
     setBalance(balance);
   }
 
@@ -68,7 +68,7 @@ export default function WithdrawalsList({funds: fundsData}: {funds: FUND_MODEL[]
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell align="right">{row.name}</TableCell>
-                <TableCell align="right">${row.minValue}</TableCell>
+                <TableCell align="right">${row.minimum_amount}</TableCell>
                 <TableCell align="right">{row.category}</TableCell>
                 <TableCell align="right">
                   <IconButton 

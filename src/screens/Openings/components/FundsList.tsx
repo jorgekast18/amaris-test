@@ -42,7 +42,7 @@ export default function FundsAvailableList({funds: fundsData}: {funds: FUND_MODE
     const dataSubscribeFund: SUBSCRIBE_FUND_MODEL = {
       fund_id: fund.id.toString(),
       customer_id: '66a80ef56a5158fe5cd25891',
-      amount: fund.minValue,
+      amount: fund.minimum_amount,
       type: TransactionType.SUBSCRIPTION
     }
     const subscribeResponse = await callEndpoint(subscribeFund(dataSubscribeFund));

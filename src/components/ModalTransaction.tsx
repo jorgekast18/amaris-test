@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Box, Typography, Button, Stack, TextField } from '@mui/material';
 import '../assets/css/TransactionModal.css'
 import { toast, ToastContainer } from 'react-toastify';
-import { MODAL_TRANSACTION, FUND_MODEL } from '../models';
-// Estilo para el contenido del modal
+import { MODAL_TRANSACTION } from '../models';
 const modalStyle = {
   position: 'absolute',
   top: '50%',
@@ -22,13 +21,13 @@ const ModalTransaction = ({ open, onClose, data, callback }: MODAL_TRANSACTION) 
     const [minValueFund, setMinValueFund] = useState(0);
 
     const handleSubmit = () => {
-        if(minValueFund !== 0 && minValueFund < data?.fund?.minValue){
-            toast.warning(`El valor mínimo de suscripción para el fondo es de: ${data?.fund?.minValue}`, {
+        if(minValueFund !== 0 && minValueFund < data?.fund?.minimum_amount){
+            toast.warning(`El valor mínimo de suscripción para el fondo es de: ${data?.fund?.minimum_amount}`, {
                 position: "top-right"
               });
               return;
-        }else if(minValueFund !== 0 && minValueFund >= data?.fund?.minValue){
-            data.fund.minValue = minValueFund;
+        }else if(minValueFund !== 0 && minValueFund >= data?.fund?.minimum_amount){
+            data.fund.minimum_amount = minValueFund;
         }
 
         callback(data?.fund);
@@ -56,19 +55,19 @@ const ModalTransaction = ({ open, onClose, data, callback }: MODAL_TRANSACTION) 
                         required
                         id='amount-fund'
                         label='Valor de inscripción'
-                        defaultValue={data?.fund?.minValue}
+                        defaultValue={data?.fund?.minimum_amount}
                         error={hasErrorMinValue}
                         size='small'
                         type='number'
                         onChange={(event) => {
-                            setHasErrorMinValue(event.target.value < data?.fund?.minValue)
+                            setHasErrorMinValue(event.target.value < data?.fund?.minimum_amount)
                             setMinValueFund(parseFloat(event.target.value));
                         }}
                     />
                 </div>
                 {
                     hasErrorMinValue &&
-                    <span style={{ color: "red"}}>El valor mínimo de inscripción es: {data?.fund?.minValue}</span>
+                    <span style={{ color: "red"}}>El valor mínimo de inscripción es: {data?.fund?.minimum_amount}</span>
                 }
                 
             </Stack>   
@@ -84,7 +83,6 @@ const ModalTransaction = ({ open, onClose, data, callback }: MODAL_TRANSACTION) 
             
         </Box>
         </Modal>
-        <ToastContainer />
     </>
   );
 };

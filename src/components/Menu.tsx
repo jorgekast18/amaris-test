@@ -12,8 +12,6 @@ const Menu = () => {
   const { balance } = useBalance();
   const menuItems: MenuItem[] = [
     { label: 'Home', path: '/' },
-    { label: 'Aperturas', path: '/openings' },
-    { label: 'Cancelación', path: '/withdrawals' },
   ];
 
   return (

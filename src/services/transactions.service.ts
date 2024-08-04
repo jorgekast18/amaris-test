@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { loadAbort } from '../utilities';
 import { FUND_MODEL, SUBSCRIBE_FUND_MODEL } from '@models';
-import { getAllFunds, subscribeFundUrl, getAllTransactionsUrl, withdrawalFunddUrl } from '../constants/urls';
+import { getAllFunds, subscribeFundUrl, getAllTransactionsUrl, withdrawalFundUrl } from '../constants/urls';
 
 export const getFundsAvailable = () => {
     const controller = loadAbort();
@@ -19,18 +19,18 @@ export const getFundById = (id: string) => {
     }
 }
 
-export const subscribeFund = (fund: SUBSCRIBE_FUND_MODEL) => {
+export const subscribeFund = (customerId: string, fund: FUND_MODEL) => {
     const controller = loadAbort();
     return {
-        call: axios.post(subscribeFundUrl, fund, { signal: controller.signal }),
+        call: axios.patch(`${subscribeFundUrl}/${customerId}`, fund, { signal: controller.signal }),
         controller,
     }
 }
 
-export const withdrawalFund = (fund: SUBSCRIBE_FUND_MODEL) => {
+export const withdrawalFund = (customerId: string, fund: FUND_MODEL) => {
     const controller = loadAbort();
     return {
-        call: axios.post(withdrawalFunddUrl, fund, { signal: controller.signal }),
+        call: axios.patch(`${withdrawalFundUrl}/${customerId}`, fund, { signal: controller.signal }),
         controller,
     }
 }
